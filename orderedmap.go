@@ -65,6 +65,19 @@ func (m *OrderedMap) Keys() (keys []interface{}) {
 	return keys
 }
 
+// Values returns all of the values in the order they were inserted.
+func (m *OrderedMap) Values() (values []interface{}) {
+	values = make([]interface{}, m.Len())
+
+	element := m.ll.Front()
+	for i := 0; element != nil; i++ {
+		values[i] = element.Value.(*orderedMapElement).value
+		element = element.Next()
+	}
+
+	return values
+}
+
 // Delete will remove a key from the map. It will return true if the key was
 // removed (the key did exist).
 func (m *OrderedMap) Delete(key interface{}) (didDelete bool) {
